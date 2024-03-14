@@ -48,4 +48,3 @@ enum Dir
 
 	DIR_COUNT = 4
 };
-

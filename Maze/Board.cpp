@@ -2,6 +2,7 @@
 #include "Board.h"
 #include "ConsoleHelper.h"
 #include "Player.h"
+#include <random>
 
 Board::Board()
 {
@@ -61,6 +62,10 @@ void Board::GenerateMap()
 		}
 	}
 	//랜덤으로 우측 혹은 아래로 길을 뚫는 작업
+	std::random_device rand;
+	std::mt19937 rng(rand());
+	std::uniform_int_distribution<int> dist(0, 100);
+
 	for (int32 y = 0; y < _size; ++y)
 	{
 		for (int32 x = 0; x < _size; ++x)
@@ -91,7 +96,8 @@ void Board::GenerateMap()
 
 			//for tile that contains both odd value x or y
 			//Creating randomized path from empty Tiles
-			const int32 randValue = ::rand() % 2;
+
+			const int32 randValue = dist(rng) % 2;
 			if (randValue == 0)
 			{
 				_tile[y][x + 1] = TileType::EMPTY;

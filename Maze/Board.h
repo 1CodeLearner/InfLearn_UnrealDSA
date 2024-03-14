@@ -29,12 +29,13 @@ public:
 	Pos GetStartPos() const { return Pos{1 , 1}; }
 	Pos GetEndPos() const {return Pos{_size - 2, _size - 2}; }
 
+	TileType GetTileType(Pos pos);
+	ConsoleColor GetTileColor(Pos pos);
+
 private:
 	TileType _tile[BOARD_MAX_SIZE][BOARD_MAX_SIZE] = {};
 	int32 _size = 0;
 
-	TileType GetTileType(Pos pos);
-	ConsoleColor GetTileColor(Pos pos);
 
 	Player* _player;
 };

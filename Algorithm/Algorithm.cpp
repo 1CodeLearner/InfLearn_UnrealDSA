@@ -10,7 +10,7 @@ int main()
 {
 	//std::vector<int> v;
 	Vector<int> Test;
-	
+
 	for (int i = 0; i < 100; ++i)
 	{
 		Test.push_back(i);
@@ -33,11 +33,11 @@ int main()
 		{
 			li.push_back(i);
 		}
-	}*/
+	}
 
-	//for (List<int>::iterator it = li.begin(); it != li.end(); ++it)
-	//{
-	//	li.erase(eraseIt);
-	//}
+	for (List<int>::iterator it = li.begin(); it != li.end(); ++it)
+	{
+		li.erase(eraseIt);
+	}*/
 	
 }

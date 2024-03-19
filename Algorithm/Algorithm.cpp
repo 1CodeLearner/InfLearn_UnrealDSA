@@ -9,21 +9,21 @@ using namespace std;
 int main()
 {
 	//std::vector<int> v;
-	Vector<int> Test;
+	//Vector<int> Test;
 
-	for (int i = 0; i < 100; ++i)
-	{
-		Test.push_back(i);
-		std::cout << Test[i] << " " << Test.size() << " " << Test.capacity() << std::endl;
-	}
+	//for (int i = 0; i < 100; ++i)
+	//{
+	//	Test.push_back(i);
+	//	std::cout << Test[i] << " " << Test.size() << " " << Test.capacity() << std::endl;
+	//}
 
-	Test.clear();
-	std::cout << Test.size() << " " << Test.capacity() << std::endl;
+	//Test.clear();
+	//std::cout << Test.size() << " " << Test.capacity() << std::endl;
 
 	
-	/*List<int> li;
+	List<int> li;
 	List<int>::iterator eraseIt;
-	for(int i = 0; i < 2; ++i)
+	for(int i = 0; i < 10; ++i)
 	{
 		if(i==5)
 		{
@@ -35,9 +35,10 @@ int main()
 		}
 	}
 
+	li.erase(eraseIt);
 	for (List<int>::iterator it = li.begin(); it != li.end(); ++it)
 	{
-		li.erase(eraseIt);
-	}*/
-	
+		std::cout << *it << " ";
+	}
+
 }

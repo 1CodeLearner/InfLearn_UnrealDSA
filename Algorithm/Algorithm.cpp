@@ -113,13 +113,13 @@ int main()
 	//		li.push_back(i);
 	//	}
 	//}
-
-	//for(list<int>::iterator it = li.begin(); it != li.end(); ++it)
+	// 
+	//for(List<int>::iterator it = li.begin(); it != li.end(); ++it)
 	//{
 	//	//li.erase(eraseIt);
 	//}
 
-	Queue<int> q; 
+	/*Queue<int> q; 
 
 	for (int i = 0; i < 101; ++i) 
 	{
@@ -132,5 +132,18 @@ int main()
 		std::cout << value << endl;
 	}
 	int size = q.size();
-	std::cout << size << endl;
+	std::cout << size << endl;*/
+
+	int value = 10;
+	int value2 = 10;
+	int what = value++ + 15;
+	int what2 = ++value2 + 15; 
+
+	cout << what << '\n'; 
+	cout << what2;
+
+	std::vector<int> test; 
+	std::list<int> test2;
+	std::vector<int>::iterator it = test.begin();
+	std::list<int>::iterator it2 = test2.begin();
 }

@@ -8,16 +8,16 @@ public:
 	void Init(Board* board);
 	void Update(uint64 deltaTime);
 
-	Pos GetPosition() const {return _pos;}
-	void SetPosition(Pos pos) {_pos = pos;}
+	Pos GetPosition() const {return _loc;}
+	void SetPosition(Pos pos) {_loc = pos;}
 
 private:
 	Board* _board = nullptr;
 	int32 _dir = DIR_UP;
-	Pos _pos = {};
-	std::vector<Pos> moves;
+	Pos _loc = {};
+	std::vector<Pos> absLocs;
 	uint64 totalTime = 0;
-	uint64 maxTime = 10;
+	uint64 maxTime = 100;
 	int32 index = 0;
 
 	bool CanMove(Pos newPos) const;

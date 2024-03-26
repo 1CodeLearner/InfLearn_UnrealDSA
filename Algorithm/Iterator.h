@@ -14,6 +14,12 @@ public:
 		: _pNode(node)
 	{}
 
+	//it + val
+	Iterator& operator+(int index)
+	{
+		
+	}
+
 	//++it
 	Iterator& operator++() 
 	{

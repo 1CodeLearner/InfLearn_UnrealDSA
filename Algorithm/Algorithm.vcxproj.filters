@@ -50,5 +50,11 @@
     <ClInclude Include="DFS.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TestVector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TestList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

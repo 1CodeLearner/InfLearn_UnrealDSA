@@ -6,6 +6,8 @@
 #include "List.h"
 #include "Vector.h"
 #include "DFS.h"
+#include "TestVector.h"
+#include "TestList.h"
 
 using namespace std;
 
@@ -15,10 +17,9 @@ int main()
 	DFS::CreateGraph(6, false);
 	DFS::DFSTravel(0, false);
 
+	//std::vector<int> v;
+	//TestVector<int> Test;
 
-	////std::vector<int> v;
-	//Vector<int> Test;
-	//
 	//for (int i = 0; i < 100; ++i)
 	//{
 	//	Test.push_back(i);
@@ -27,26 +28,29 @@ int main()
 
 	//Test.clear();
 	//std::cout << Test.size() << " " << Test.capacity() << std::endl;
-	//Test[10];
 
-	//List<int> li;
-	//List<int>::iterator eraseIt;
-	//for(int i = 0; i < 10; ++i)
-	//{
-	//	if(i==5)
-	//	{
-	//		eraseIt = li.insert(li.end(), i);
-	//	}
-	//	else
-	//	{
-	//		li.push_back(i);
-	//	}
-	//}
-	// 
-	//for(List<int>::iterator it = li.begin(); it != li.end(); ++it)
-	//{
-	//	//li.erase(eraseIt);
-	//}
+
+
+	TestList<int> li;
+	TestList<int>::iterator eraseIt;
+	for(int i = 0; i < 10; ++i)
+	{
+		if(i==5)
+		{
+			eraseIt = li.insert(li.end(), i);
+		}
+		else
+		{
+			li.push_back(i);
+		}
+	}
+	li.insert(li.erase(eraseIt), 10);
+	for(TestList<int>::iterator it = li.begin(); it != li.end(); ++it)
+	{
+		cout << *it << endl;
+	}
+
+
 
 	/*Queue<int> q;
 

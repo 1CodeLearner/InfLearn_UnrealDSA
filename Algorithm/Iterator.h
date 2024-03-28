@@ -14,28 +14,35 @@ public:
 		: _pNode(node)
 	{}
 
+	~Iterator()
+	{
+		//if node doesn't have next or prev nodes
+		if (!_pNode->_pNext && !_pNode->_pPrev)
+			delete _pNode;
+	}
+
 	//it + val
 	Iterator& operator+(int index)
 	{
-		
+
 	}
 
 	//++it
-	Iterator& operator++() 
+	Iterator& operator++()
 	{
 		_pNode = _pNode->_pNext;
-		return * this;
+		return *this;
 	}
 	//it++
 	Iterator operator++(int)
 	{
-		Iterator<T> temp = *this; 
+		Iterator<T> temp = *this;
 		_pNode = _pNode->_pNext;
 		return temp;
 	}
-	
+
 	//--it
-	Iterator& operator--() 
+	Iterator& operator--()
 	{
 		_pNode = _pNode->_prev;
 		return *this;
@@ -43,7 +50,7 @@ public:
 	//it--
 	Iterator operator--(int)
 	{
-		Iterator<T> temp = *this; 
+		Iterator<T> temp = *this;
 		_pNode = _pNode->_pNext;
 		return temp;
 	}

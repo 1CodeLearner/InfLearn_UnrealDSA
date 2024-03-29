@@ -2,12 +2,14 @@
 #include <vector>
 #include <list>
 #include <queue>
+#include <stack>
 #include "Queue.h"
 #include "List.h"
 #include "Vector.h"
 #include "DFS.h"
 #include "TestVector.h"
 #include "TestList.h"
+#include "TestStack.h"
 
 using namespace std;
 
@@ -31,27 +33,40 @@ int main()
 
 
 
-	TestList<int> li;
-	TestList<int>::iterator eraseIt;
-	for(int i = 0; i < 10; ++i)
+	//TestList<int> li;
+	//TestList<int>::iterator eraseIt;
+	//for(int i = 0; i < 10; ++i)
+	//{
+	//	if(i==5)
+	//	{
+	//		eraseIt = li.insert(li.end(), i);
+	//	}
+	//	else
+	//	{
+	//		li.push_back(i);
+	//	}
+	//}
+	//li.insert(li.erase(eraseIt), 10);
+	//for(TestList<int>::iterator it = li.begin(); it != li.end(); ++it)
+	//{
+	//	cout << *it << endl;
+	//}
+
+	TestStack<int> s;
+
+	s.push(1);
+	s.push(2);
+	s.push(3);
+
+	while (!s.empty()) 
 	{
-		if(i==5)
-		{
-			eraseIt = li.insert(li.end(), i);
-		}
-		else
-		{
-			li.push_back(i);
-		}
-	}
-	li.insert(li.erase(eraseIt), 10);
-	for(TestList<int>::iterator it = li.begin(); it != li.end(); ++it)
-	{
-		cout << *it << endl;
+		int data = s.top();
+		s.pop();
 	}
 
+	int size = s.size();
 
-
+	int test = 10;
 	/*Queue<int> q;
 
 	for (int i = 0; i < 101; ++i)

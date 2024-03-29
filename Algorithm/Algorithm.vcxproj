@@ -139,7 +139,9 @@
     <ClInclude Include="List.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Queue.h" />
+    <ClInclude Include="Stack.h" />
     <ClInclude Include="TestList.h" />
+    <ClInclude Include="TestStack.h" />
     <ClInclude Include="TestVector.h" />
     <ClInclude Include="Vector.h" />
   </ItemGroup>

@@ -10,6 +10,7 @@
 #include "TestVector.h"
 #include "TestList.h"
 #include "TestStack.h"
+#include "TestQueue.h"
 
 using namespace std;
 
@@ -52,22 +53,24 @@ int main()
 	//	cout << *it << endl;
 	//}
 
-	TestStack<int> s;
+	//TestStack<int> s;
 
-	s.push(1);
-	s.push(2);
-	s.push(3);
+	//s.push(1);
+	//s.push(2);
+	//s.push(3);
 
-	while (!s.empty()) 
-	{
-		int data = s.top();
-		s.pop();
-	}
+	//while (!s.empty()) 
+	//{
+	//	int data = s.top();
+	//	s.pop();
+	//}
 
-	int size = s.size();
+	//int size = s.size();
 
-	int test = 10;
-	/*Queue<int> q;
+	//int test = 10;
+
+
+	TestQueue<int> q;
 
 	for (int i = 0; i < 101; ++i)
 	{
@@ -77,10 +80,10 @@ int main()
 	{
 		int value = q.front();
 		q.pop();
-		std::cout << value << endl;
+		//std::cout << value << endl;
 	}
 	int size = q.size();
-	std::cout << size << endl;*/
+	int test = 10;
 
 	/*int value = 10;
 	int value2 = 10;

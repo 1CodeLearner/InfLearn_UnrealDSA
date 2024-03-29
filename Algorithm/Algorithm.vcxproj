@@ -141,6 +141,7 @@
     <ClInclude Include="Queue.h" />
     <ClInclude Include="Stack.h" />
     <ClInclude Include="TestList.h" />
+    <ClInclude Include="TestQueue.h" />
     <ClInclude Include="TestStack.h" />
     <ClInclude Include="TestVector.h" />
     <ClInclude Include="Vector.h" />

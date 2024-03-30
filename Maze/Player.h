@@ -22,5 +22,8 @@ private:
 
 	bool CanMove(Pos newPos) const;
 	bool AtDestination() const;
+
+	void RightHandRule();
+	void BFS();
 };
 

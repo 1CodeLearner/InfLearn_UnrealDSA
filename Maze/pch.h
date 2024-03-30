@@ -4,45 +4,59 @@
 #include <windows.h>
 #include <iostream>
 #include <vector>
+#include <queue>
+#include <map>
 
 using namespace std;
 
-struct Pos 
+struct Pos
 {
-	bool operator==(const Pos& other) 
+	Pos() = default;
+	Pos(int32 x, int32 y)
+		: x(x), y(y)
+	{}
+
+	bool operator<(const Pos& other) const
+	{
+		if(y != other.y) return y < other.y;
+		
+		return x < other.x;
+	}
+		
+	bool operator==(const Pos& other)
 	{
 		return y == other.y && x == other.x;
 	}
 
-	bool operator!=(Pos& other) 
+	bool operator!=(const Pos& other)
 	{
 		return !(*this == other);
 	}
 
-	Pos operator+(Pos& other) 
+	Pos operator+(Pos& other)
 	{
 		Pos ret;
 		ret.y = y + other.y;
-		ret.x = x + other.x; 
+		ret.x = x + other.x;
 		return ret;
 	}
 
 	Pos& operator+=(Pos& other)
 	{
-		y += other.y; 
+		y += other.y;
 		x += other.x;
 		return *this;
 	}
 
 
-	int32 y = 0; 
-	int32 x = 0; 
+	int32 y = 0;
+	int32 x = 0;
 };
 
-enum Dir 
+enum Dir
 {
-	DIR_UP = 0, 
-	DIR_LEFT = 1, 
+	DIR_UP = 0,
+	DIR_LEFT = 1,
 	DIR_DOWN = 2,
 	DIR_RIGHT = 3,
 

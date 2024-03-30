@@ -32,6 +32,8 @@ public:
 	TileType GetTileType(Pos pos);
 	ConsoleColor GetTileColor(Pos pos);
 
+	int32 GetSize() { return _size; }
+
 private:
 	TileType _tile[BOARD_MAX_SIZE][BOARD_MAX_SIZE] = {};
 	int32 _size = 0;

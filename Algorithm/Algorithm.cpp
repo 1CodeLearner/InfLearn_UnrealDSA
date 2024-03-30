@@ -11,14 +11,17 @@
 #include "TestList.h"
 #include "TestStack.h"
 #include "TestQueue.h"
+#include "BFS.h"
 
 using namespace std;
 
 int main()
 {
+	DFS::Init(false);
+	DFS::Search(0);
 
-	DFS::CreateGraph(6, false);
-	DFS::DFSTravel(0, false);
+	//BFS::Init(false);
+	//BFS::Search(0);
 
 	//std::vector<int> v;
 	//TestVector<int> Test;

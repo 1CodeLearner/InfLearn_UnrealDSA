@@ -17,11 +17,11 @@ using namespace std;
 
 int main()
 {
-	DFS::Init(false);
-	DFS::Search(0);
+	//DFS::Init(false);
+	//DFS::Search(0);
 
-	//BFS::Init(false);
-	//BFS::Search(0);
+	BFS::Init(true);
+	BFS::Search(0);
 
 	//std::vector<int> v;
 	//TestVector<int> Test;

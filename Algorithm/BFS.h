@@ -16,6 +16,8 @@ namespace BFS
 	vector<vector<int>> adjMatrix;
 	//vector<bool> visited;
 	vector<bool> discovered;
+	vector<int> parent;
+	vector<int> distance;
 
 	bool bList;
 
@@ -23,6 +25,8 @@ namespace BFS
 	{
 		vertices.resize(6);
 		discovered.resize(6, false);
+		parent.resize(6);
+		distance.resize(6);
 		//visited.resize(6, false);
 
 		bList = bIsList;
@@ -57,6 +61,8 @@ namespace BFS
 		queue<int> map;
 		map.push(here);
 		discovered[here] = true;
+		parent[here] = -1;
+		distance[here] = 0;
 
 		while (!map.empty()) {
 			here = map.front();
@@ -69,18 +75,23 @@ namespace BFS
 					if (discovered[there]) continue;
 					map.push(there);
 					discovered[there] = true;
+					parent[there] = here;
+					distance[there] = distance[here] + 1;
 				}
 			}
-			else{
-				for(int i = 0; i < adjMatrix[here].size(); ++i){
+			else {
+				for (int i = 0; i < adjMatrix[here].size(); ++i) {
 					int there = adjMatrix[here][i];
-					if(there == -1) continue;
-					else there = i; 
-					if(discovered[there]) continue; 
+					if (there == -1) continue;
+					else there = i;
+					if (discovered[there]) continue;
 					map.push(there);
 					discovered[there] = true;
+					parent[there] = here;
+					distance[there] = distance[here] + 1;
 				}
 			}
 		}
+		int test = 10; 
 	}
 }

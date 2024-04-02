@@ -60,21 +60,29 @@ namespace BFS
 		//visited[here] = true;
 		queue<int> map;
 		map.push(here);
+
+		//Record starting node
 		discovered[here] = true;
 		parent[here] = -1;
 		distance[here] = 0;
 
 		while (!map.empty()) {
+			//visit node
 			here = map.front();
 			map.pop();
 			cout << "visited: " << here << endl;
 
 			if (bList) {
+				//discover all possible new nodes from current visited node
 				for (int i = 0; i < adjList[here].size(); ++i) {
 					int there = adjList[here][i];
 					if (discovered[there]) continue;
+					
+					//record the new node
 					map.push(there);
 					discovered[there] = true;
+					
+					//record info of the new node
 					parent[there] = here;
 					distance[there] = distance[here] + 1;
 				}

@@ -68,5 +68,8 @@
     <ClInclude Include="BFS.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Dijikstra.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

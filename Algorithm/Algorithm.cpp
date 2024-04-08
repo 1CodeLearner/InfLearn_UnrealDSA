@@ -12,6 +12,7 @@
 #include "TestStack.h"
 #include "TestQueue.h"
 #include "BFS.h"
+#include "Dijkstra.h"
 
 using namespace std;
 
@@ -20,8 +21,13 @@ int main()
 	//DFS::Init(false);
 	//DFS::Search(0);
 
-	BFS::Init(true);
-	BFS::Search(0);
+	//BFS::Init(true);
+	//BFS::Search(0);
+
+	Dijkstra::Initialize();
+	Dijkstra::Practice(0);
+	//Dijkstra::Search(0);
+
 
 	//std::vector<int> v;
 	//TestVector<int> Test;

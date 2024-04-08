@@ -136,7 +136,7 @@
   <ItemGroup>
     <ClInclude Include="BFS.h" />
     <ClInclude Include="DFS.h" />
-    <ClInclude Include="Dijikstra.h" />
+    <ClInclude Include="Dijkstra.h" />
     <ClInclude Include="Iterator.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="Node.h" />

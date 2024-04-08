@@ -3,7 +3,7 @@
 #include <iostream>
 #include <list>
 
-namespace Dijikstra
+namespace Dijkstra
 {
 	using namespace std;
 	struct Vertex
@@ -27,103 +27,75 @@ namespace Dijikstra
 		adjacent[5][4] = 5;
 	}
 
-	void Dijikstra_Practice2(int here) 
-	{
-		struct VertexCost 
-		{
-			int vertex;
-			int bestCost;
-		};
-
-		list<VertexCost> discovered;
-		vector<int> best(6, INT64_MAX);
-		vector<int> parent;
-		
-		discovered.emplace_back(here, 0);
-		best[here] = 0; 
-		parent[here] = here;
-
-		while (!discovered.empty()) {
-			int findBestCost = INT64_MAX;
-			list<VertexCost>::iterator bestIt;
-			for (auto nextIt = discovered.begin(); nextIt != discovered.end(); ++nextIt) {
-				if (nextIt->bestCost < findBestCost)
-				{
-					findBestCost = nextIt->bestCost;
-					bestIt = nextIt; 
-				}
-			}
-
-			here = bestIt->vertex;
-			if(bestIt->bestCost >= best[here])
-				continue;
-
-			//loop through all vertex to find the next best cost node
-			for (int there = 0; there < 6; there++) {
-				if(adjacent[here][there] == -1)
-					continue;
-				int nextCost = adjacent[here][there];
-				
-				int bestCost = best[here] + nextCost;
-
-				if(bestCost >= best[there])
-					continue;
-				
-				discovered.push_back(VertexCost{there, bestCost});
-				best[there] = bestCost;
-				parent[there] = bestCost;
-			}
-		}
-	}
-
-	void Dijikstra_Practice(int here) 
+	void Practice(int here) 
 	{
 		using namespace std; 
 		struct VertexCost 
 		{
 			int vertex; 
-			int totalCost; // total cost relative to starting node
+			int cost; // most efficient cost relative to starting node
+			bool operator==(const VertexCost& other) {
+				return vertex == other.vertex && cost == other.cost;
+			}
 		};
 
-		list<VertexCost> discovered;
-		vector<int> best = vector<int>(6, INT64_MAX);
+		vector<VertexCost> discovered;
+		vector<int> bestCost = vector<int>(6, INT32_MAX);
 		vector<int> parent = vector<int>(6, -1);
 
-		//starting node
-		discovered.push_back(VertexCost{here, 0});
-		best[here] = 0;
-		parent[here] = here;
+		discovered.push_back({here, 0});
+		bestCost[here] = 0;
+		//parent[here] = here;
 
 		while (!discovered.empty()) {
-			int bestCost = INT64_MAX; 
-			list<VertexCost>::iterator bestIter;
-			for (auto bestIt = discovered.begin(); bestIt != discovered.end(); ++bestIt) {
-				if (bestIt->totalCost < bestCost) {
-					bestCost = bestIt->totalCost;
-					bestIter = bestIt;
+			vector<VertexCost>::iterator bestIt;
+			int tempBestCost = INT32_MAX;
+
+			//Find best possible route in current node
+			for (auto it = discovered.begin(); it != discovered.end(); ++it) {
+				if (it->cost < tempBestCost) {
+					tempBestCost = it->cost;
+					bestIt = it;
 				}
 			}
+			
+			//visit the next best possible node
+			here = bestIt->vertex;
+			int cost = bestIt->cost;
 
-			//visit node
-			here = bestIter->vertex;
-			discovered.erase(bestIter);
-
-			if(best[here] < bestIter->totalCost)
+			//remove the next best possible node from discovered
+			auto newEnd = std::remove(discovered.begin(), discovered.end(), *bestIt);
+			discovered.erase(newEnd, discovered.end());
+			
+			//continue if next best possible route was already found
+			if(cost > bestCost[here])
 				continue;
 
-			
+			//loop through all possible routes in current node
 			for (int there = 0; there < 6; ++there) {
+				//skip if route doesn't exist
 				if(adjacent[here][there] == -1)
 					continue;
-
-				int nextCost = best[here] + adjacent[here][there];
-				if(nextCost >= best[there])
-					continue;
 				
-				discovered.push_back(VertexCost{there, nextCost});
-				best[there] = nextCost; 
+				//get the cost of next node and check if a best possible route was already found for it
+				int nextCost = bestCost[here] + adjacent[here][there];
+				if(nextCost >= bestCost[there])
+					continue;
+				//else
+				
+				bestCost[there] = nextCost;
+
+				//store the next potential best possible node to discovered
+				discovered.push_back({ there, nextCost });
 				parent[there] = here;
 			}
+		}
+
+		for (int i = 0; i < bestCost.size(); ++i) {
+			cout << "Node " << i << ": " << bestCost[i] << endl;
+		}
+		for (int i = 0; i < parent.size(); ++i) {
+			cout << "Node " << i << ": " << parent[i] << endl;
 		}
 	}
 
@@ -166,7 +138,7 @@ namespace Dijikstra
 				continue;
 
 			for (int there = 0; there < 6; there++) {
-				if (adjacent[here][there])
+				if (adjacent[here][there] == -1)
 					continue;
 
 				int nextCost = best[here] + adjacent[here][there];
@@ -177,6 +149,13 @@ namespace Dijikstra
 				best[there] = nextCost;
 				parent[there] = here;
 			}
+		}
+
+		for (int i = 0; i < best.size(); ++i) {
+			cout << "Node " << i << ": " << best[i] << endl;
+		}
+		for (int i = 0; i < parent.size(); ++i) {
+			cout << "Node " << i << ": " << parent[i] << endl;
 		}
 	}
 }

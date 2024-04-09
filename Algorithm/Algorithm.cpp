@@ -13,19 +13,27 @@
 #include "TestQueue.h"
 #include "BFS.h"
 #include "Dijkstra.h"
+#include "Tree.h"
 
 using namespace std;
 
 int main()
 {
+	shared_ptr<Tree::Node> what = Tree::CreateTree();
+	Tree::PrintTree(what, 0);
+	cout << Tree::FindHeight(what);
+	cout << endl;
+	cout << Tree::FindHeightAlt(what);
+
+
 	//DFS::Init(false);
 	//DFS::Search(0);
 
 	//BFS::Init(true);
 	//BFS::Search(0);
 
-	Dijkstra::Initialize();
-	Dijkstra::Practice(0);
+	//Dijkstra::Initialize();
+	//Dijkstra::Practice(0);
 	//Dijkstra::Search(0);
 
 

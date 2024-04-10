@@ -14,16 +14,31 @@
 #include "BFS.h"
 #include "Dijkstra.h"
 #include "Tree.h"
+#include "PriorityQueue.h"
 
 using namespace std;
 
 int main()
 {
-	shared_ptr<Tree::Node> what = Tree::CreateTree();
+	Priority_queue<int, vector<int>, greater<int>> pq;
+
+	pq.push(100);
+	pq.push(300);
+	pq.push(200);
+	pq.push(500);
+	pq.push(400);
+
+	while (!pq.empty()) {
+		int val = pq.top();
+		pq.pop();
+		cout << val << endl;
+	}
+
+	/*shared_ptr<Tree::Node> what = Tree::CreateTree();
 	Tree::PrintTree(what, 0);
 	cout << Tree::FindHeight(what);
 	cout << endl;
-	cout << Tree::FindHeightAlt(what);
+	cout << Tree::FindHeightAlt(what);*/
 
 
 	//DFS::Init(false);

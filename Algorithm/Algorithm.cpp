@@ -20,7 +20,7 @@ using namespace std;
 
 int main()
 {
-	Priority_queue<int, vector<int>, greater<int>> pq;
+	/*Priority_queue<int, vector<int>, greater<int>> pq;
 
 	pq.push(100);
 	pq.push(300);
@@ -32,7 +32,7 @@ int main()
 		int val = pq.top();
 		pq.pop();
 		cout << val << endl;
-	}
+	}*/
 
 	/*shared_ptr<Tree::Node> what = Tree::CreateTree();
 	Tree::PrintTree(what, 0);
@@ -47,9 +47,8 @@ int main()
 	//BFS::Init(true);
 	//BFS::Search(0);
 
-	//Dijkstra::Initialize();
-	//Dijkstra::Practice(0);
-	//Dijkstra::Search(0);
+	Dijkstra::Initialize();
+	Dijkstra::Practice2(0);
 
 
 	//std::vector<int> v;

@@ -2,6 +2,7 @@
 #include <vector>
 #include <iostream>
 #include <list>
+#include <algorithm>
 
 namespace Dijkstra
 {
@@ -25,6 +26,65 @@ namespace Dijkstra
 		adjacent[1][3] = 10;
 		adjacent[3][4] = 5;
 		adjacent[5][4] = 5;
+	}
+
+	void Practice2(int here) 
+	{
+		using namespace std; 
+
+		struct VertexCost 
+		{
+			int vertex; 
+			int cost;
+			bool operator==(const VertexCost& other) {
+				return vertex == other.vertex && cost == other.cost;
+			}
+		};
+
+		vector<VertexCost> discovered;
+		vector<int> bestCost(6, INT32_MAX);
+		vector<int> parent(6, -1); 
+
+		discovered.push_back(VertexCost{here, 0});
+		bestCost[here] = 0; 
+		parent[0] = 0;
+
+		while (!discovered.empty()) {
+			vector<VertexCost>::iterator bestIt;
+			int best = INT32_MAX;
+			for (auto it = discovered.begin(); it != discovered.end(); ++it) {
+				if (it->cost < best) {
+					best = it->cost;
+					bestIt = it;
+				}
+			}
+
+			here = bestIt->vertex;
+			int cost = bestIt->cost;
+
+			auto newEnd = std::remove(discovered.begin(), discovered.end(), *bestIt);
+			discovered.erase(newEnd, discovered.end());
+
+			if(cost > bestCost[here]) continue;
+
+			for (int there = 0; there < 6; ++there) {
+				if(adjacent[here][there] == -1) continue;
+
+				int nextCost = adjacent[here][there] + bestCost[here];
+				if(nextCost > bestCost[there]) continue;
+
+				discovered.push_back({there, nextCost});
+				bestCost[there] = nextCost;
+				parent[there] = here;
+			}
+		}
+
+		for (int i = 0; i < bestCost.size(); ++i) {
+			cout << "Node " << i << ": " << bestCost[i] << endl;
+		}
+		for (int i = 0; i < parent.size(); ++i) {
+			cout << "Node " << i << ": " << parent[i] << endl;
+		}
 	}
 
 	void Practice(int here) 

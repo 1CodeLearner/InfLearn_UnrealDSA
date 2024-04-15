@@ -78,7 +78,7 @@ int main()
 	//		li.push_back(i);
 	//	}
 	//}
-	//li.insert(li.erase(eraseIt), 10);
+	//li.insert(li.erase(eraseIt), 10); 
 	//for(TestList<int>::iterator it = li.begin(); it != li.end(); ++it)
 	//{
 	//	cout << *it << endl;

@@ -26,5 +26,6 @@ private:
 	void RightHandRule();
 	void BFS();
 	void AStar();
+	void AStarExample();
 };
 

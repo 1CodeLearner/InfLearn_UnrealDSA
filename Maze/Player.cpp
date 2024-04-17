@@ -13,7 +13,8 @@ void Player::Init(Board* board)
 
 	//RightHandRule();
 	//BFS();
-	AStar();
+	//AStar();
+	AStarExample();
 }
 
 void Player::Update(uint64 deltaTime)
@@ -191,6 +192,122 @@ void Player::BFS()
 	//Get path
 	reverse(absLocs.begin(), absLocs.end());
 }
+
+
+
+struct Node 
+{	
+	bool operator<(const Node& other) const {
+		return f < other.f;
+	}
+	bool operator>(const Node& other) const {
+		return f > other.f;
+	}
+	int f = 0;
+	int g = 0; 
+	Pos pos = {0,0};
+};
+
+
+
+void Player::AStarExample() 
+{
+	enum MaxDir 
+	{
+		MAXDIR = 4
+	};
+
+	Pos dir[4]
+	{
+		Pos{-1,0}, //up
+		Pos{0,-1},	//left
+		Pos{1,0},	//down
+		Pos{0,1}	//right
+	};
+
+	int cost[4]
+	{
+		10,
+		10,
+		10,
+		10
+	};
+
+
+
+	//vector<vector<bool>> closed;
+	vector<vector<int>> best(_board->GetSize(), {_board->GetSize(), INT32_MAX});
+	map<Pos, Pos> parent;
+	priority_queue<Node, vector<Node>, greater<Node>>pq;
+
+	//first visited node
+	int g = 0;
+	int h = 10 * (abs(_loc.y - _board->GetEndPos().y) + abs(_loc.x - _board->GetEndPos().x));
+	int f = g + h;
+	best[_loc.y][_loc.x] = f;
+	Node node = Node({ f, g, _loc });
+	parent[_loc] = _loc;
+	pq.push(node);
+
+	while (!pq.empty())
+	{
+		Node curr = pq.top();
+		pq.pop();
+
+		Pos pos = curr.pos;
+		if (best[pos.y][pos.x] < curr.f) continue;
+
+		if (pos == _board->GetEndPos()) break;
+
+		for (int i = 0; i < MaxDir::MAXDIR; ++i) {
+			Pos nextPos = pos + dir[i];
+
+			if(!CanMove(nextPos)) continue;
+
+			g = curr.g + cost[i];
+			h = 10 * (abs(nextPos.y - _board->GetEndPos().y) + abs(nextPos.x - _board->GetEndPos().x));
+
+			if (best[nextPos.y][nextPos.x] <= g + h) continue;
+
+			Node next = Node({ g + h, g, nextPos });
+
+			best[nextPos.y][nextPos.x] = next.f;
+			parent[nextPos] = curr.pos;
+			pq.push(next);
+		}
+	}
+
+	Pos pos = _board->GetEndPos();
+
+	stack<Pos> stack;
+
+	while (true)
+	{
+		stack.push(pos);
+		pos = parent[pos];
+		if (pos == _board->GetStartPos()) break;
+	}
+	while (!stack.empty())
+	{
+		absLocs.push_back(stack.top());
+		stack.pop();
+	}
+
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 struct PQNode

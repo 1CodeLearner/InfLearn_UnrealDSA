@@ -155,18 +155,18 @@ void Player::BFS()
 		q.pop();
 
 		//break out if end position is visited
-		if(visitedPos == _board->GetEndPos())
+		if (visitedPos == _board->GetEndPos())
 			break;
 
-		for(int32 i = 0; i < 4; ++i){
+		for (int32 i = 0; i < 4; ++i) {
 			//get potential direction
 			Pos newDir = visitedPos + dir[i];
 
 			//if that new path is blocked, continue
-			if(!CanMove(newDir)) continue;	
+			if (!CanMove(newDir)) continue;
 
 			//check if direction was already visited
-			if(discovered[newDir.y][newDir.x]) continue;
+			if (discovered[newDir.y][newDir.x]) continue;
 
 			//if it wasn't visited, push that sucker in the queue
 			q.push(newDir);
@@ -175,12 +175,12 @@ void Player::BFS()
 			parent[newDir] = visitedPos;
 		}
 	}
-	
+
 	//push in end position
 	absLocs.push_back(visitedPos);
-	
+
 	//back-track until start position is reached
-	while(visitedPos != _board->GetStartPos()){
+	while (visitedPos != _board->GetStartPos()) {
 		//get parent of current node
 		//const Pos& prev = parent[visitedPos.y][visitedPos.x];
 		const Pos& prev = parent[visitedPos];
@@ -195,120 +195,113 @@ void Player::BFS()
 
 
 
-struct Node 
-{	
+struct Node
+{
 	bool operator<(const Node& other) const {
 		return f < other.f;
 	}
 	bool operator>(const Node& other) const {
 		return f > other.f;
 	}
-	int f = 0;
-	int g = 0; 
-	Pos pos = {0,0};
+	int32 f = 0;
+	int32 g = 0;
+	Pos pos = { 0,0 };
 };
 
 
 
-void Player::AStarExample() 
+void Player::AStarExample()
 {
-	enum MaxDir 
+	enum MaxDir
 	{
 		MAXDIR = 4
 	};
 
-	Pos dir[4]
+	Pos dir[]
 	{
 		Pos{-1,0}, //up
 		Pos{0,-1},	//left
 		Pos{1,0},	//down
-		Pos{0,1}	//right
+		Pos{0,1},	//right
+		Pos{1,1},
+		Pos{1,-1},
+		Pos{-1,1},
+		Pos{-1,-1}
 	};
 
-	int cost[4]
+	int cost[]
 	{
 		10,
 		10,
 		10,
-		10
+		10,
+		14,
+		14,
+		14,
+		14
 	};
 
-
-
-	//vector<vector<bool>> closed;
-	vector<vector<int>> best(_board->GetSize(), {_board->GetSize(), INT32_MAX});
+	Pos start = _board->GetStartPos();
+	Pos end = _board->GetEndPos();
+	int size = _board->GetSize();
+	vector<vector<int32>> best(size, vector<int32>(size, INT32_MAX));
+	vector<vector<bool>> closed(size, vector<bool>(size, false));
 	map<Pos, Pos> parent;
-	priority_queue<Node, vector<Node>, greater<Node>>pq;
+	priority_queue<Node, vector<Node>, greater<Node>> pq;
 
-	//first visited node
-	int g = 0;
-	int h = 10 * (abs(_loc.y - _board->GetEndPos().y) + abs(_loc.x - _board->GetEndPos().x));
-	int f = g + h;
-	best[_loc.y][_loc.x] = f;
-	Node node = Node({ f, g, _loc });
-	parent[_loc] = _loc;
-	pq.push(node);
+	//best[start.y][start.x] = 0;
+	parent[start] = start;
+	int32 g = 0;
+	int32 h = 10 * (abs(start.y - end.y) + abs(start.x - end.x));
+	pq.push(Node{g + h, g, start});
 
 	while (!pq.empty())
 	{
 		Node curr = pq.top();
 		pq.pop();
 
-		Pos pos = curr.pos;
-		if (best[pos.y][pos.x] < curr.f) continue;
+		Pos currPos = curr.pos;
 
-		if (pos == _board->GetEndPos()) break;
+		if (currPos == end) break;
 
-		for (int i = 0; i < MaxDir::MAXDIR; ++i) {
-			Pos nextPos = pos + dir[i];
+		if (best[currPos.y][currPos.x] < curr.f)
+			continue;
 
-			if(!CanMove(nextPos)) continue;
+		closed[currPos.y][currPos.x] = true;
 
-			g = curr.g + cost[i];
-			h = 10 * (abs(nextPos.y - _board->GetEndPos().y) + abs(nextPos.x - _board->GetEndPos().x));
+		for (int i = 0; i < MAXDIR; ++i)
+		{
+			Pos nextPos = currPos + dir[i];
 
-			if (best[nextPos.y][nextPos.x] <= g + h) continue;
+			if (!CanMove(nextPos))
+				continue;
 
-			Node next = Node({ g + h, g, nextPos });
+			g = curr.f + cost[i];
+			h = 10 * (abs(nextPos.y - end.y) + abs(nextPos.x - end.x));
 
-			best[nextPos.y][nextPos.x] = next.f;
-			parent[nextPos] = curr.pos;
+			if (best[nextPos.y][nextPos.x] <= g + h)
+				continue;
+
+			if(closed[nextPos.y][nextPos.x])
+				continue;
+
+			best[nextPos.y][nextPos.x] = g + h;
+			parent[nextPos] = currPos;
+			Node next(Node{ g + h, g, nextPos });
 			pq.push(next);
 		}
 	}
 
-	Pos pos = _board->GetEndPos();
+	Pos tempPos = end;
+	absLocs.push_back(tempPos);
 
-	stack<Pos> stack;
-
-	while (true)
+	while (tempPos != start)
 	{
-		stack.push(pos);
-		pos = parent[pos];
-		if (pos == _board->GetStartPos()) break;
+		absLocs.push_back(parent[tempPos]);
+		tempPos = parent[tempPos];
 	}
-	while (!stack.empty())
-	{
-		absLocs.push_back(stack.top());
-		stack.pop();
-	}
-
-	
+	reverse(absLocs.begin(), absLocs.end());
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 struct PQNode
 {
@@ -380,7 +373,7 @@ void Player::AStar()
 	// 2) 뒤늦게 더 좋은 경로가 발견될 수 있음 -> 예외 처리 필수
 	// - openList에서 찾아서 제거한다거나.
 	// - pq에서 pop한 다음에 무시한다거나. 
-	
+
 	// 초기값
 	{
 		int32 g = 0;

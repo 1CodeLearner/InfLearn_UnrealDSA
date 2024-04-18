@@ -17,7 +17,7 @@ private:
 	Pos _loc = {};
 	std::vector<Pos> absLocs;
 	uint64 totalTime = 0;
-	uint64 maxTime = 100;
+	uint64 maxTime = 200;
 	int32 index = 0;
 
 	bool CanMove(Pos newPos) const;

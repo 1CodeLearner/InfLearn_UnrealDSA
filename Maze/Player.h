@@ -27,5 +27,6 @@ private:
 	void BFS();
 	void AStar();
 	void AStarExample();
+	void AnotherAStarPractice();
 };
 

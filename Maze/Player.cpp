@@ -208,7 +208,73 @@ struct Node
 	Pos pos = { 0,0 };
 };
 
+void Player::AnotherAStarPractice() 
+{
+	struct TileFound 
+	{
+		bool operator<(const TileFound& other) {
+			return f < other.f;
+		}
+		bool operator>(const TileFound& other) {
+			return f > other.f;
+		}
+		int f = 0; 
+		int g = 0;	
+		Pos pos{0, 0};
+	};
+	
+	enum
+	{
+		MAXDIR = 4
+	};
 
+	Pos dir[]
+	{
+		Pos{-1,0}, //up
+		Pos{0,-1},	//left
+		Pos{1,0},	//down
+		Pos{0,1},	//right
+		Pos{1,1},
+		Pos{1,-1},
+		Pos{-1,1},
+		Pos{-1,-1}
+	};
+
+	int cost[]
+	{
+		10,
+		10,
+		10,
+		10,
+		14,
+		14,
+		14,
+		14
+	};
+
+	//i need to determine my starting and ending point
+	Pos startPos = _loc; 
+	Pos endPos = _board->GetEndPos();
+	
+	//next i need to declare necessary containers
+	map<Pos, int> bestCost;
+	map<Pos, Pos> parent;
+	priority_queue<TileFound, vector<TileFound>, greater<TileFound>> discovered;
+
+	//i need to initialize the containers
+	//find f g and h
+	int g = 0, h = 10 * (abs(startPos.y - endPos.y) + abs(startPos.x - endPos.x));
+	bestCost[startPos] = g + h;
+	parent[startPos] = startPos;
+	discovered.push(TileFound{g + h, g, startPos});
+
+	while (!discovered.empty()) 
+	{
+		TileFound curr = discovered.top();
+		discovered.pop();
+
+	}
+}
 
 void Player::AStarExample()
 {

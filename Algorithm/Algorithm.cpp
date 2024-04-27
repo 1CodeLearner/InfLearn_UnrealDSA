@@ -15,11 +15,23 @@
 #include "Dijkstra.h"
 #include "Tree.h"
 #include "PriorityQueue.h"
+#include "RedBlackTree.h"
 
 using namespace std;
 
 int main()
 {
+	
+	RedBlackTree RBT;
+
+	RBT.Insert(20);
+	RBT.Insert(10);
+	RBT.Insert(30);
+	RBT.Insert(40);
+
+	RBT.Print();
+
+
 	/*Priority_queue<int, vector<int>, greater<int>> pq;
 
 	pq.push(100);
@@ -47,8 +59,8 @@ int main()
 	//BFS::Init(true);
 	//BFS::Search(0);
 
-	Dijkstra::Initialize();
-	Dijkstra::Practice2(0);
+	/*Dijkstra::Initialize();
+	Dijkstra::Practice2(0);*/
 
 
 	//std::vector<int> v;

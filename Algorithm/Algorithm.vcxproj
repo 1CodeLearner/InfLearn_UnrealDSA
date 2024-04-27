@@ -131,6 +131,7 @@
     <ClCompile Include="Iterator.cpp" />
     <ClCompile Include="List.cpp" />
     <ClCompile Include="Node.cpp" />
+    <ClCompile Include="RedBlackTree.cpp" />
     <ClCompile Include="Vector.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +143,7 @@
     <ClInclude Include="Node.h" />
     <ClInclude Include="PriorityQueue.h" />
     <ClInclude Include="Queue.h" />
+    <ClInclude Include="RedBlackTree.h" />
     <ClInclude Include="Stack.h" />
     <ClInclude Include="TestList.h" />
     <ClInclude Include="TestQueue.h" />

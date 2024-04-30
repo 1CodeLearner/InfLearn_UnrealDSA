@@ -34,16 +34,21 @@ RedBlackTree::RedBlackTree()
 
 RedBlackTree::~RedBlackTree()
 {
-	Delete(_root);
+	Release(_root);
+	if (_nil)
+		delete _nil;
 }
 
-void RedBlackTree::Delete(NodeTree* nodeTree)
+void RedBlackTree::Release(NodeTree* root)
 {
-	if (nodeTree == _nil)
+	if (root == _nil)
+	{
 		return;
-	Delete(nodeTree->left);
-	Delete(nodeTree->right);
-	delete nodeTree;
+	}
+
+	Release(root->left);
+	Release(root->right);
+	delete root;
 }
 
 void RedBlackTree::Print(NodeTree* nodeTree, int x, int y)
@@ -67,22 +72,61 @@ void RedBlackTree::Print(NodeTree* nodeTree, int x, int y)
 
 NodeTree* RedBlackTree::Search(NodeTree* nodeTree, int key)
 {
-	return nullptr;
+	if (!nodeTree) return _nil;
+
+	while (nodeTree)
+	{
+		if (key == nodeTree->key)
+			return nodeTree;
+		else if (key < nodeTree->key) {
+			nodeTree = nodeTree->left;
+		}
+		else
+			nodeTree = nodeTree->right;
+	}
+
+	return _nil;
 }
 
 NodeTree* RedBlackTree::Min(NodeTree* nodeTree)
 {
-	return nullptr;
+	if (nodeTree == _nil) return _nil;
+
+	while (nodeTree->left != _nil)
+		nodeTree = nodeTree->left;
+
+	return nodeTree;
 }
 
 NodeTree* RedBlackTree::Max(NodeTree* nodeTree)
 {
-	return nullptr;
+	if (nodeTree == _nil) return _nil;
+
+	while (nodeTree->right != _nil)
+		nodeTree = nodeTree->right;
+
+	return nodeTree;
 }
 
 NodeTree* RedBlackTree::Next(NodeTree* nodeTree)
 {
-	return nullptr;
+	if (nodeTree == _nil) return _nil;
+
+	if (nodeTree->right)
+	{
+		nodeTree = nodeTree->right;
+		while (nodeTree->left != _nil)
+			nodeTree = nodeTree->left;
+	}
+	else
+	{
+		while (nodeTree == nodeTree->parent->right)
+			nodeTree = nodeTree->parent;
+
+		nodeTree = nodeTree->parent;
+	}
+
+	return nodeTree;
 }
 
 void RedBlackTree::Insert(int key)
@@ -104,7 +148,7 @@ void RedBlackTree::Insert(int key)
 
 	newNode->parent = parent;
 
-	if(parent == _nil)
+	if (parent == _nil)
 		_root = newNode;
 	else if (key < parent->key)
 		parent->left = newNode;
@@ -121,12 +165,44 @@ void RedBlackTree::InsertFixup(NodeTree* nodeTree)
 
 void RedBlackTree::Delete(int key)
 {
+	NodeTree* node = Search(_root, key);
+	Delete(node);
 }
 
-//void RedBlackTree::Delete(NodeTree* nodeTree)
-//{
-//}
+void RedBlackTree::Delete(NodeTree* nodeTree)
+{
+	if (nodeTree == _nil) return;
+
+	if (nodeTree->left == _nil)
+		Replace(nodeTree, nodeTree->right);
+	else if (nodeTree->right == _nil)
+		Replace(nodeTree, nodeTree->left);
+	else
+	{
+		NodeTree* next = Next(nodeTree);
+		nodeTree->key = next->key;
+		Delete(next);
+	}
+}
 
 void RedBlackTree::Replace(NodeTree* u, NodeTree* v)
 {
+	NodeTree* parent = u->parent;
+
+	if (parent == _nil) {
+		_root = v;
+	}
+	else if (parent->left == u)
+	{
+		parent->left = v;
+	}
+	else
+	{
+		parent->right = v;
+	}
+
+	if (v)
+		v->parent = parent;
+
+	delete u;
 }

@@ -28,6 +28,8 @@ int main()
 	RBT.Insert(10);
 	RBT.Insert(30);
 	RBT.Insert(40);
+	
+	RBT.Delete(20);
 
 	RBT.Print();
 

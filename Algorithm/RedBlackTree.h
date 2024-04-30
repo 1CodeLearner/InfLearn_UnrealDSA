@@ -8,7 +8,7 @@ enum class Color
 };
 
 struct NodeTree
-{	
+{
 	NodeTree* parent = nullptr;
 	NodeTree* left = nullptr;
 	NodeTree* right = nullptr;
@@ -22,13 +22,12 @@ class RedBlackTree
 public:
 	RedBlackTree();
 	~RedBlackTree();
-
 private:
-	void Delete(NodeTree* NodeTree);
+	void Release(NodeTree* root);
 public:
 
-	void	Print() { Print(_root, 10, 0); }
-	void	Print(NodeTree* nodeTree, int x, int y);
+	void		Print() { Print(_root, 10, 0); }
+	void		Print(NodeTree* nodeTree, int x, int y);
 
 	NodeTree* Search(NodeTree* NodeTree, int key);
 
@@ -36,12 +35,12 @@ public:
 	NodeTree* Max(NodeTree* nodeTree);
 	NodeTree* Next(NodeTree* nodeTree);
 
-	void	Insert(int key);
-	void	InsertFixup(NodeTree* nodeTree);
+	void		Insert(int key);
+	void		InsertFixup(NodeTree* nodeTree);
 
-	void	Delete(int key);
-	//void	Delete(NodeTree* nodeTree);
-	void	Replace(NodeTree* u, NodeTree* v);
+	void		Delete(int key);
+	void		Delete(NodeTree* NodeTree);
+	void		Replace(NodeTree* u, NodeTree* v);
 
 private:
 	NodeTree* _root = nullptr;

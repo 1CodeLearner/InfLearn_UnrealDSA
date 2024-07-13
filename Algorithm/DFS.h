@@ -39,15 +39,25 @@ namespace DFS
 			adjList[5].push_back(4);
 		}
 		else {
-			adjMatrix.resize(6, vector<int>(6, -1));
-			adjMatrix[0][1] = 1;
-			adjMatrix[1][2] = 1;
-			adjMatrix[1][5] = 1;
-			adjMatrix[2][3] = 1;
-			adjMatrix[2][5] = 1;
-			adjMatrix[4][3] = 1;
-			adjMatrix[4][5] = 1;
-			adjMatrix[5][4] = 1;
+			adjMatrix = vector<vector<int>>
+			{
+				{ 0, 1, 0, 1, 0, 0},
+				{ 1, 0, 1, 1, 0, 0},
+				{ 0, 0, 0, 0, 0, 0},
+				{ 0, 0, 0, 0, 1, 0},
+				{ 0, 0, 0, 0, 0, 0},
+				{ 0, 0, 0, 0, 1, 0},
+			};
+
+			//adjMatrix.resize(6, vector<int>(6, -1));
+			//adjMatrix[0][1] = 1;
+			//adjMatrix[1][2] = 1;
+			//adjMatrix[1][5] = 1;
+			//adjMatrix[2][3] = 1;
+			//adjMatrix[2][5] = 1;
+			//adjMatrix[4][3] = 1;
+			//adjMatrix[4][5] = 1;
+			//adjMatrix[5][4] = 1;
 		}
 	}
 
@@ -56,22 +66,28 @@ namespace DFS
 
 		cout << "Visited " << here << endl;
 
-		if(bList){
-			for(int i = 0; i < adjList[here].size(); ++i){
+		if (bList) {
+			for (int i = 0; i < adjList[here].size(); ++i) {
 				int there = adjList[here][i];
-				if(visited[there]) continue;
+				if (visited[there]) continue;
 				Search(there);
 			}
 		}
-		else{
-			for(int i = 0; i < adjMatrix[here].size(); ++i){
+		else {
+			for (int i = 0; i < adjMatrix[here].size(); ++i) {
 				int there = adjMatrix[here][i];
-				if(there == -1) continue; 
+				if (there == -1) continue;
 				else there = i;
-				if(visited[there]) continue;
+				if (visited[there]) continue;
 				Search(there);
 			}
 		}
+	}
+
+	void SearchAll()
+	{
+		for (int i = 0; i < 6; ++i)
+			if (!visited[i]) Search(i);
 	}
 }
 

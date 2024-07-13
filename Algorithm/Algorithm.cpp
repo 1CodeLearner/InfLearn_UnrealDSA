@@ -21,17 +21,17 @@ using namespace std;
 
 int main()
 {
-	
-	RedBlackTree RBT;
+
+	/*RedBlackTree RBT;
 
 	RBT.Insert(20);
 	RBT.Insert(10);
 	RBT.Insert(30);
 	RBT.Insert(40);
-	
+
 	RBT.Delete(20);
 
-	RBT.Print();
+	RBT.Print();*/
 
 
 	/*Priority_queue<int, vector<int>, greater<int>> pq;
@@ -55,8 +55,8 @@ int main()
 	cout << Tree::FindHeightAlt(what);*/
 
 
-	//DFS::Init(false);
-	//DFS::Search(0);
+	DFS::Init(false);
+	DFS::SearchAll();
 
 	//BFS::Init(true);
 	//BFS::Search(0);

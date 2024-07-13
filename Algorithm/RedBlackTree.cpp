@@ -157,6 +157,8 @@ void RedBlackTree::Insert(int key)
 
 	newNode->left = _nil;
 	newNode->right = _nil;
+
+	InsertFixup(newNode);
 }
 
 void RedBlackTree::InsertFixup(NodeTree* nodeTree)

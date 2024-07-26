@@ -207,14 +207,13 @@ struct MoreNode
 
 	bool operator>(const MoreNode& other) const
 	{
-		//if (f == other.f) return h > other.h;
-
+		if (f == other.f) return h > other.h;
 		return f > other.f;
 	}
 
 	bool operator<(const MoreNode& other) const
 	{
-		//if (f == other.f) return h < other.h;
+		if (f == other.f) return h < other.h;
 		return f < other.f;
 	}
 };

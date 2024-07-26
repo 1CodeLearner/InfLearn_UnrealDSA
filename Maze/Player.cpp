@@ -14,7 +14,8 @@ void Player::Init(Board* board)
 	//RightHandRule();
 	//BFS();
 	//AStar();
-	AStarExample();
+	//AStarExample();
+	MoreAStar();
 }
 
 void Player::Update(uint64 deltaTime)
@@ -193,7 +194,102 @@ void Player::BFS()
 	reverse(absLocs.begin(), absLocs.end());
 }
 
+struct MoreNode
+{
+	MoreNode(){}
+	MoreNode(int _f, int _g, int _h, Pos _pos)
+		:f(_f), g(_g), h(_h), pos(_pos)
+	{}
+	int f;
+	int g;
+	int h;
+	Pos pos = { 0,0 };
 
+	bool operator>(const MoreNode& other) const
+	{
+		//if (f == other.f) return h > other.h;
+
+		return f > other.f;
+	}
+
+	bool operator<(const MoreNode& other) const
+	{
+		//if (f == other.f) return h < other.h;
+		return f < other.f;
+	}
+};
+
+void Player::MoreAStar()
+{
+	Pos Start = _board->GetStartPos();
+	Pos End = _board->GetEndPos();
+
+	priority_queue<MoreNode, vector<MoreNode>, greater<MoreNode>> pq;
+	vector<vector<int>> best(_board->GetSize(), vector<int>(_board->GetSize(), INT_MAX));
+	vector<vector<Pos>> parent(_board->GetSize(), vector<Pos>(_board->GetSize()));
+
+	Pos dirMove[] =
+	{
+		{0, -1},
+		{-1, 0},
+		{0, 1},
+		{1, 0}
+	};
+
+	int dirCost[] =
+	{
+		10,
+		10,
+		10,
+		10
+	};
+
+	int g = 0;
+	int h = 10 * abs(Start.y - End.x) + abs(Start.x - End.y);
+	int f = g + h;
+	MoreNode node(f, g, h, Start);
+
+	pq.push(node);
+	best[node.pos.x][node.pos.y] = f;
+	parent[node.pos.x][node.pos.y] = Start;
+
+	while (pq.size() != 0)
+	{
+		MoreNode here = pq.top();
+		pq.pop();
+		Pos herePos = here.pos;
+
+		if (best[herePos.x][herePos.y] < here.f) continue;
+
+		for (int i = 0; i < DIR_COUNT; ++i)
+		{
+			Pos NextPos = herePos + dirMove[i];
+			if (!CanMove(NextPos)) continue;
+
+			g = here.g + dirCost[i];
+			h = 10 * abs(NextPos.x - End.x) + abs(NextPos.y - End.y);
+			f = g + h;
+
+			if (best[NextPos.x][NextPos.y] < f) continue;
+
+			best[NextPos.x][NextPos.y] = f;
+			parent[NextPos.x][NextPos.y] = herePos;
+			MoreNode Next(f, g, h, NextPos);
+			pq.push(Next);
+		}
+	}
+
+	Pos curPos = End;
+	absLocs.push_back(curPos);
+
+	while (Start != curPos)
+	{
+		absLocs.push_back(parent[curPos.x][curPos.y]);
+		curPos = parent[curPos.x][curPos.y];
+	}
+
+	reverse(absLocs.begin(), absLocs.end());
+}
 
 struct Node
 {
@@ -212,10 +308,10 @@ void Player::AnotherAStarPractice()
 {
 	struct TileFound 
 	{
-		bool operator<(const TileFound& other) {
+		bool operator<(const TileFound& other) const {
 			return f < other.f;
 		}
-		bool operator>(const TileFound& other) {
+		bool operator>(const TileFound& other) const {
 			return f > other.f;
 		}
 		int f = 0; 

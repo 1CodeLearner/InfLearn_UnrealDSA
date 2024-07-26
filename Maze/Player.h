@@ -28,5 +28,6 @@ private:
 	void AStar();
 	void AStarExample();
 	void AnotherAStarPractice();
+	void MoreAStar();
 };
 
